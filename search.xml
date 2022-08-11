@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Comment_tips</title>
+      <link href="/2022/08/11/Comment-tips/"/>
+      <url>/2022/08/11/Comment-tips/</url>
+      
+        <content type="html"><![CDATA[<h1 id="评论者必读事项！"><a href="#评论者必读事项！" class="headerlink" title="评论者必读事项！"></a>评论者必读事项！</h1><p>首先感谢你到<a href="https://ch3cooh12138.github.io/">Cabelis’s lab</a>参观。这是一个<del>做着玩的</del>个人博客，用于记录一些学习经验及感想等。  </p><h2 id="评论前奏"><a href="#评论前奏" class="headerlink" title="评论前奏"></a>评论前奏</h2><p>本网站评论插件采用<a href="https://github.com/gitalk/gitalk">gitalk</a>。要进行评论，首先你得先有一个<a href="https://github.com/">github</a>账号（未来可能会通过其他插件开放qq,vx等评论渠道）。由于它的某些 <del>Bug</del> <strong>神奇特性</strong>，你需要找到一个<em>标题</em>为<strong>无空格的纯英文</strong>的post（比如本post标题为Comment_tips）下的gitalk进行登录，否则你可能会跳转回<a href="https://ch3cooh12138.github.io/">首页</a>。  </p><p>如此，你就可以成功登录github并使用gitalk插件进行评论。  </p><h2 id="评论守则"><a href="#评论守则" class="headerlink" title="评论守则"></a>评论守则</h2><blockquote><p>互联网不是法外之地。</p></blockquote><ul><li>请不要进行恶意评论，包括但不限于诅咒、人肉等。</li><li>请不要发布瑟琴、爆利等内容。</li><li>想到再加…</li></ul><h2 id="作者的话"><a href="#作者的话" class="headerlink" title="作者的话"></a>作者的话</h2><p>本人是第一次做这类项目，如果做得不好敬请见谅。<br>如果你有任何建议，欢迎你<a href="mailto:1225610429@qq.com">发邮件给我</a>！<br>Cabelis祝你网上冲浪愉快。😉</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World!</title>
       <link href="/2022/08/11/Hello%20World!/"/>
       <url>/2022/08/11/Hello%20World!/</url>
