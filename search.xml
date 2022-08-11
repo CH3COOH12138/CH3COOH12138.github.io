@@ -8,7 +8,7 @@
       <link href="/2022/08/11/Comment-tips/"/>
       <url>/2022/08/11/Comment-tips/</url>
       
-        <content type="html"><![CDATA[<h1 id="评论者必读事项！"><a href="#评论者必读事项！" class="headerlink" title="评论者必读事项！"></a>评论者必读事项！</h1><p>首先感谢你到<a href="https://ch3cooh12138.github.io/">Cabelis’s lab</a>参观。这是一个<del>做着玩的</del>个人博客，用于记录一些学习经验及感想等。  </p><h2 id="评论前奏"><a href="#评论前奏" class="headerlink" title="评论前奏"></a>评论前奏</h2><p>本网站评论插件采用<a href="https://github.com/gitalk/gitalk">gitalk</a>。要进行评论，首先你得先有一个<a href="https://github.com/">github</a>账号（未来可能会通过其他插件开放qq,vx等评论渠道）。由于它的某些 <del>Bug</del> <strong>神奇特性</strong>，你需要找到一个<em>标题</em>为<strong>无空格的纯英文</strong>的post（比如本post标题为Comment_tips）下的gitalk进行登录，否则你可能会跳转回<a href="https://ch3cooh12138.github.io/">首页</a>。  </p><p>如此，你就可以成功登录github并使用gitalk插件进行评论。  </p><h2 id="评论守则"><a href="#评论守则" class="headerlink" title="评论守则"></a>评论守则</h2><blockquote><p>互联网不是法外之地。</p></blockquote><ul><li>请不要进行恶意评论，包括但不限于诅咒、人肉等。</li><li>请不要发布瑟琴、爆利等内容。</li><li>想到再加…</li></ul><h2 id="作者的话"><a href="#作者的话" class="headerlink" title="作者的话"></a>作者的话</h2><p>本人是第一次做这类项目，如果做得不好敬请见谅。<br>如果你有任何建议，欢迎你<a href="mailto:1225610429@qq.com">发邮件给我</a>！<br>Cabelis祝你网上冲浪愉快。😉</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="评论者必读事项！"><a href="#评论者必读事项！" class="headerlink" title="评论者必读事项！"></a>评论者必读事项！</h1><p>首先感谢你到<a href="https://ch3cooh12138.github.io/">Cabelis’s lab</a>参观。这是一个<del>做着玩的</del>个人博客，用于记录一些学习经验及感想等。  </p><h2 id="评论前奏"><a href="#评论前奏" class="headerlink" title="评论前奏"></a>评论前奏</h2><p>本网站评论插件采用<a href="https://github.com/gitalk/gitalk">gitalk</a>。要进行评论，首先你得先有一个<a href="https://github.com/">github</a>账号（未来可能会通过其他插件开放qq,vx等评论渠道）。由于它的某些 <del>Bug</del> <strong>神奇特性</strong>，你需要找到一个<em>标题</em>为<strong>无空格的纯英文</strong>的post（比如本post标题为Comment_tips）下的gitalk进行登录，否则你可能会跳转回<a href="https://ch3cooh12138.github.io/">首页</a>。  </p><p>如此，你就可以成功登录github并使用gitalk插件进行评论。 </p><blockquote><p>Q.为什么github登不上&#x2F;gitalk加载很慢？<br>A.建议挂个梯子。</p></blockquote><p>虽然你可以使用纯文本进行评论编辑，但是我还是建议你使用<a href="http://markdown.p2hp.com/">Markdown</a>。这是一个易学且易读的标记语言。通过使用Markdown，你可以写出<strong>粗体</strong>，<em>斜体</em>，<del>删除线</del>等特殊文字，对文字加上<a href="https://ch3cooh12138.github.io/">链接</a>。<br><code># you can even use it to code!</code><br>如果你要使用Markdown插入图片的话，建议你使用图床（e.g.<a href="https://sm.ms/">SM.MS</a>)。将图片上传至图床后复制链接，然后用特定格式插入图片。  </p><p>Markdown快速入门：<a href="https://www.markdowntutorial.com/">点我！</a>  </p><h2 id="评论守则"><a href="#评论守则" class="headerlink" title="评论守则"></a>评论守则</h2><blockquote><p>互联网不是法外之地。</p></blockquote><ul><li>请不要进行恶意评论，包括但不限于诅咒、人肉等。</li><li>请不要发布瑟琴、爆利等内容。</li><li>想到再加…</li></ul><h2 id="作者的话"><a href="#作者的话" class="headerlink" title="作者的话"></a>作者的话</h2><p>本人是第一次做这类项目，如果做得不好敬请见谅。<br>如果你有任何建议，欢迎你<a href="mailto:1225610429@qq.com">发邮件给我</a>！<br>Cabelis祝你网上冲浪愉快。😉</p>]]></content>
       
       
       
@@ -21,7 +21,7 @@
       <link href="/2022/08/11/Hello%20World!/"/>
       <url>/2022/08/11/Hello%20World!/</url>
       
-        <content type="html"><![CDATA[<h2 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h2><p>属于是把一些基本内容搞好了。特别累今天。睡觉明天再写。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h2><p>2022.8.10<br>属于是把一些基本内容搞好了。特别累今天。睡觉明天再写。  </p><h2 id="第二天"><a href="#第二天" class="headerlink" title="第二天"></a>第二天</h2><p>2022.8.11<br>加入了评论系统，具体参照Comment_tips。<br>还加了一些乱七八糟的东西。<br><em>（哈欠）</em>已经熬了两个大夜了，离左嘴角15mm的地方长了颗痘。<br>敷个面膜早点睡罢。  </p>]]></content>
       
       
       
