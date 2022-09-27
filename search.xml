@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>使用Pyautogui库查看光标位置</title>
+      <link href="/2022/09/27/py3/"/>
+      <url>/2022/09/27/py3/</url>
+      
+        <content type="html"><![CDATA[<p>使用前需安装以下两个库：</p><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install pyautogui</span><br><span class="line">pip install pillow</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> pyautogui</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取鼠标位置</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_mouse_position</span>():</span><br><span class="line">    time.sleep(<span class="number">5</span>)  <span class="comment"># 准备时间</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;开始获取鼠标位置&#x27;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">            <span class="comment"># Get and print the mouse coordinates.</span></span><br><span class="line">            x, y = pyautogui.position()</span><br><span class="line">            positionStr = <span class="string">&#x27;鼠标坐标点（X,Y）为：&#123;&#125;,&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(x).rjust(<span class="number">4</span>), <span class="built_in">str</span>(y).rjust(<span class="number">4</span>))</span><br><span class="line">            pix = pyautogui.screenshot().getpixel((x, y))  <span class="comment"># 获取鼠标所在屏幕点的RGB颜色</span></span><br><span class="line">            positionStr += <span class="string">&#x27; RGB:(&#x27;</span> + <span class="built_in">str</span>(pix[<span class="number">0</span>]).rjust(<span class="number">3</span>) + <span class="string">&#x27;,&#x27;</span> + <span class="built_in">str</span>(pix[<span class="number">1</span>]).rjust(<span class="number">3</span>) + <span class="string">&#x27;,&#x27;</span> + <span class="built_in">str</span>(pix[<span class="number">2</span>]).rjust(</span><br><span class="line">                <span class="number">3</span>) + <span class="string">&#x27;) &#x27;</span></span><br><span class="line">            <span class="built_in">print</span>(positionStr)</span><br><span class="line">            time.sleep(<span class="number">0.5</span>)  <span class="comment"># 停顿时间</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;获取鼠标位置失败&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    get_mouse_position()</span><br><span class="line">    <span class="built_in">input</span>(<span class="string">&quot;\n按Enter键退出...&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>使用Pillow库批量获取缩略图</title>
       <link href="/2022/09/11/py2/"/>
       <url>/2022/09/11/py2/</url>
