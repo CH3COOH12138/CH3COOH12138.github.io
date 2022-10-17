@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>tsctf-j_wp</title>
+      <link href="/2022/10/17/tsctf-j-wp/"/>
+      <url>/2022/10/17/tsctf-j-wp/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C语言scanf()和printf()函数学习总结</title>
+      <link href="/2022/10/11/c1/"/>
+      <url>/2022/10/11/c1/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> C </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>使用Pyautogui库查看光标位置</title>
       <link href="/2022/09/27/py3/"/>
       <url>/2022/09/27/py3/</url>
