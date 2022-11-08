@@ -4,6 +4,108 @@
   
     
     <entry>
+      <title>HECTF 一些re和密码</title>
+      <link href="/2022/11/08/hectf2022/"/>
+      <url>/2022/11/08/hectf2022/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Crypt0 </tag>
+            
+            <tag> Rever$e </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>简单的PTA爬虫</title>
+      <link href="/2022/11/08/py5-ptaspider/"/>
+      <url>/2022/11/08/py5-ptaspider/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>大一上计导期中考回顾</title>
+      <link href="/2022/11/05/test20221105/"/>
+      <url>/2022/11/05/test20221105/</url>
+      
+        <content type="html"><![CDATA[<p>单选题-2，原题如下：</p><blockquote><p>设有定义“int a=1, b=2, c=3, d=4, m=2, n=2;”, 则执行表达式“(m=a&gt;b)&amp;&amp;(n=c&gt;d)”后,n的值为()。<br>A. 1<br>B. 2<br>C. 3<br>D. 0</p><p>错误答案：D<br>错因：受到VB语言的影响，以及知识点的遗忘。</p></blockquote><h2 id="短路运算符">短路运算符</h2><p><strong>C Primer Plus：C保证逻辑表达式的求值顺序是从左往右。&amp;&amp;和||运算符都是序列点，所以程序在从一个运算对象执行到下一个运算对象之前，所有的副作用都会生效。而且，C 保证一旦发现某个元素让整个表达式无效，便立即停止求值。</strong></p><p>意思是，对于<code>a &amp;&amp; (b-c)</code>这个逻辑表达式，如果a为False，则整体必定为False，不必对再对<code>(b-c)</code>进行求值。<br>对于<code>a || (b-c)</code>亦然，如果a为True，整体必为True，不必理会<code>(b-c)</code>。</p><p>回到原题，<code>(m=a&gt;b)</code>计算得False，则整体必为False，后续<code>(n=c&gt;d)</code>不再参与计算。故n为原值，即<code>n=2</code>，选C。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>攻防世界 近期re刷题记录</title>
+      <link href="/2022/11/03/ctf3/"/>
+      <url>/2022/11/03/ctf3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Reverse">Reverse</h2><p>题目：<a href="https://adworld.xctf.org.cn/challenges/details?hash=919a59d6-f42f-498a-a095-544eac546273_2&amp;task_category_id=4">https://adworld.xctf.org.cn/challenges/details?hash=919a59d6-f42f-498a-a095-544eac546273_2&amp;task_category_id=4</a></p><h2 id="crypt">crypt</h2><p>题目：<a href="https://adworld.xctf.org.cn/challenges/details?hash=2b3c9bf6-1c7d-11ed-abf3-fa163e4fa609&amp;task_category_id=4">https://adworld.xctf.org.cn/challenges/details?hash=2b3c9bf6-1c7d-11ed-abf3-fa163e4fa609&amp;task_category_id=4</a></p><h2 id="666">666</h2><p>题目：<a href="https://adworld.xctf.org.cn/challenges/details?hash=b77f33bb-046b-4be9-8507-00dacd0358fc_2&amp;task_category_id=4">https://adworld.xctf.org.cn/challenges/details?hash=b77f33bb-046b-4be9-8507-00dacd0358fc_2&amp;task_category_id=4</a></p><h2 id="流浪者">流浪者</h2><p>题目：<a href="https://adworld.xctf.org.cn/challenges/details?hash=703754e8-4aef-4976-af09-25d41ecdd37d_2&amp;task_category_id=4">https://adworld.xctf.org.cn/challenges/details?hash=703754e8-4aef-4976-af09-25d41ecdd37d_2&amp;task_category_id=4</a></p><h2 id="Signin">Signin</h2><p>题目：<a href="https://adworld.xctf.org.cn/challenges/details?hash=b9b2c51c-a545-4d2f-ba34-a58d8d040115_2&amp;task_category_id=4">https://adworld.xctf.org.cn/challenges/details?hash=b9b2c51c-a545-4d2f-ba34-a58d8d040115_2&amp;task_category_id=4</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Rever$e </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>攻防世界 crypto爆破 hidden key</title>
       <link href="/2022/10/27/ctf2/"/>
       <url>/2022/10/27/ctf2/</url>
@@ -35,6 +137,12 @@
       
         <content type="html"><![CDATA[<h2 id="RSA简介">RSA简介</h2><p><a href="https://baike.baidu.com/item/RSA%E7%AE%97%E6%B3%95/263310?fromtitle=RSA&amp;fromid=210678&amp;fr=aladdin">RSA</a>是一种算法，并且广泛应用于现代，用于保密通信。</p><p>基本原理为单向陷门函数，即满足如下的三个条件：</p><ol><li>正向计算容易。</li><li>在不知道私钥的情况下，反向计算不可行。</li><li>在知道私钥的情况下，反向计算容易。</li></ol><p>具体加密算法：</p><ol><li>选取两个大素数p和q，两个数位数接近且相差较大。</li><li>计算<code>n = p*q</code>，<code>φ(n) = (p-1)(q-1)</code>。</li><li>随机选取整数e，满足<code>gcd(e,φ(n)) = 1</code>，作为公钥。</li><li>计算私钥d，满足<code>d*e ≡ 1 (mod φ(n))</code>，即d是e模φ(n)的逆元。CTF的角度看就是，d是由e,p,q可以求解出的。</li></ol><p>一般CTF就是把我们想要获得的flag作为明文，RSA中表示为m。然后通过<code>c = pow(m,e,n)</code>加密，得到密文，RSA中表示为c。<br>如果知道私钥d，则可以通过<code>m = pow(c,d,n)</code>进行解密。</p><p>在实际应用中，n，e是公开的，但是由于n一般是两个大素数的乘积，所以我们很难求解出d，所以RSA加密就是利用现代无法快速实现大素数的分解，所存在的一种安全的非对称加密。</p><p>加解密程序：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encode</span>():</span><br><span class="line">    m = bytes_to_long(<span class="string">b&#x27;flag&#123;XXXXXXXXXX&#125;&#x27;</span>)</span><br><span class="line">    p = getPrime(<span class="number">1024</span>)</span><br><span class="line">    q = getPrime(<span class="number">1024</span>)</span><br><span class="line">    n = p * q</span><br><span class="line">    e = <span class="number">0x10001</span>    <span class="comment"># 视具体题目而定</span></span><br><span class="line">    c = <span class="built_in">pow</span>(m, e, n)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;p =&quot;</span>, p)    <span class="comment"># 一般保密</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;q =&quot;</span>, q)    <span class="comment"># 一般保密</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;n =&quot;</span>, n)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;e =&quot;</span>, e)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;c =&quot;</span>, c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">p, q, n, e, c</span>):</span><br><span class="line">    phi = (p - <span class="number">1</span>) * (q - <span class="number">1</span>)</span><br><span class="line">    d = gmpy2.invert(e, phi)</span><br><span class="line">    m = <span class="built_in">pow</span>(c, d, n)</span><br><span class="line">    flag = long_to_bytes(m)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><p>通过上面的内容我们可以知道要想解密一段密文，我们需要c，d，n三个值。其中c我们是知道的，而n和d都可以通过p，q，e算出来，e我们一般也是知道的，也就是说常规的rsa题目我们的解题思路就是想想怎样把p和q求出来，并以此进行解密。</p><h2 id="攻击方法">攻击方法</h2><h3 id="已知p、q">已知p、q</h3><p>略。</p><h3 id="分解n得到p、q">分解n得到p、q</h3><p>适用情况：n已知且可因式分解</p><p>既然<code>n = p*q</code>，那么最常规的想法就是把n因式分解得到p，q，上面说n很难分解，但对于一些不太大的n，我们可以借助 <a href="http://www.factordb.com">在线因式分解网站</a> 或 <a href="https://sourceforge.net/projects/yafu/">yafu</a> 去分解它。<br>如果密钥的长度小于等于256位,一台较快的电脑可以在几个小时内成功分解其因子。</p><p>解密程序见上文。</p><h3 id="低加密指数攻击">低加密指数攻击</h3><p>适用情况：n很大但是e很小，一般e=3</p><p>n很大时我们就不能因式分解了，但是当e很小时，比如e=3，有<code>c = m^e+kn</code>，我们可以对k进行爆破，直到c-kn可以开根，借此得到m。</p><h2 id="维护中，未完待续…">维护中，未完待续…</h2><h2 id="参考资料">参考资料</h2><blockquote><p><a href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_theory/">https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_theory/</a><br><a href="https://blog.csdn.net/qq_46145027/article/details/125047313">https://blog.csdn.net/qq_46145027/article/details/125047313</a><br><a href="https://www.freesion.com/article/8945408137/">https://www.freesion.com/article/8945408137/</a><br><a href="https://www.freebuf.com/vuls/257835.html">https://www.freebuf.com/vuls/257835.html</a><br><a href="https://skysec.top/2018/09/15/%E6%B5%85%E6%9E%90RSA-Padding-Attack/">https://skysec.top/2018/09/15/浅析RSA-Padding-Attack/</a><br><a href="https://www.iacr.org/archive/pkc2005/33860001/33860001.pdf">https://www.iacr.org/archive/pkc2005/33860001/33860001.pdf</a><br><a href="https://www.cnblogs.com/nLesxw/p/learn_math_rsa.html">https://www.cnblogs.com/nLesxw/p/learn_math_rsa.html</a></p><p>篇幅有限，不完全列举。如以上文章作者认为此博客有侵权行为或不合理的引用之处，请联系我修改。</p></blockquote>]]></content>
       
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
       
       
         <tags>
@@ -114,9 +222,9 @@
       
         <tags>
             
-            <tag> Rever$e </tag>
-            
             <tag> Crypt0 </tag>
+            
+            <tag> Rever$e </tag>
             
             <tag> M1sc </tag>
             
@@ -246,7 +354,7 @@
       <link href="/2022/08/11/Hello%20World!/"/>
       <url>/2022/08/11/Hello%20World!/</url>
       
-        <content type="html"><![CDATA[<center><font size=6>开发者日志</font></center><h2 id="第一天">第一天</h2><p>2022.8.10<br>属于是把一些基本内容搞好了。特别累今天。睡觉明天再写。</p><h2 id="第二天">第二天</h2><p>2022.8.11<br>加入了评论系统，具体参照Comment_tips。<br>还加了一些乱七八糟的东西。<br>*（哈欠）*已经熬了两个大夜了，离左嘴角15mm的地方长了颗痘。<br>敷个面膜早点睡罢。</p><h2 id="第三天">第三天</h2><p>2022.8.12<br>今天在做丽泽八方的推文，没有碰这个网站。<br>又是很累的一天呢。</p><h2 id="第四天">第四天</h2><p>2022.8.13<br><s>新增levere评论系统，由于太慢&amp;太丑被弃用</s><br>新增waline评论系统，可匿名评论，目前后端未配置完成，明天再说。</p><h2 id="第N天">第N天</h2><p>2022.8.?<br>评论系统已基本部署完成。</p><h2 id="第N-1天">第N+1天</h2><p>2022.8.?<br>准备“1588号信箱”项目的开发。</p><h2 id="第不知道多少天">第不知道多少天</h2><p>2022.11.-1<br>waline评论系统的数据库因为太久没有操作被归档了（惨）<br>积极评论罢</p>]]></content>
+        <content type="html"><![CDATA[<center><font size=6>开发者日志</font></center><h2 id="第一天">第一天</h2><p>2022.8.10<br>属于是把一些基本内容搞好了。特别累今天。睡觉明天再写。</p><h2 id="第二天">第二天</h2><p>2022.8.11<br>加入了评论系统，具体参照Comment_tips。<br>还加了一些乱七八糟的东西。<br>*（哈欠）*已经熬了两个大夜了，离左嘴角15mm的地方长了颗痘。<br>敷个面膜早点睡罢。</p><h2 id="第三天">第三天</h2><p>2022.8.12<br>今天在做丽泽八方的推文，没有碰这个网站。<br>又是很累的一天呢。</p><h2 id="第四天">第四天</h2><p>2022.8.13<br><s>新增levere评论系统，由于太慢&amp;太丑被弃用</s><br>新增waline评论系统，可匿名评论，目前后端未配置完成，明天再说。</p><h2 id="第N天">第N天</h2><p>2022.8.?<br>评论系统已基本部署完成。</p><h2 id="第N-1天">第N+1天</h2><p>2022.8.?<br>准备“1588号信箱”项目的开发。</p><h2 id="第不知道多少天">第不知道多少天</h2><p>2022.11.-1<br>waline评论系统的数据库因为太久没有操作被归档了（惨）<br>积极评论罢。</p>]]></content>
       
       
       
