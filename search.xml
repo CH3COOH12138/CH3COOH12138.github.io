@@ -8,7 +8,7 @@
       <link href="/2022/11/24/py6/"/>
       <url>/2022/11/24/py6/</url>
       
-        <content type="html"><![CDATA[<p>锣鼓的题目素质极低，评测点经常有乱七八糟的空格，用Python写的时候随手加**.strip()**以避免坐牢。</p>]]></content>
+        <content type="html"><![CDATA[<p>锣鼓的题目素质极低，评测点经常有乱七八糟的空格，用Python写的时候随手加 <strong>.strip()</strong> 以避免坐牢。</p>]]></content>
       
       
       <categories>
