@@ -1,0 +1,377 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>肉眼扫描二维码的一种思路 | Cabelis's lab</title><meta name="keywords" content="M1sc"><meta name="author" content="Cabelis"><meta name="copyright" content="Cabelis"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="前情提要 早就听闻天枢&amp;天璇战队里面个个都是人才，说话又好听，还会肉眼扫人脸发送微信好友请求。 众所周知，大部分普通人都是通过微信扫二维码添加好友请求的，那“肉眼扫人脸发送微信好友请求”这一看似复杂的动作就可以简单的分成以下两步：  将人脸转化为微信好友二维码。 肉眼扫描转化后的二维码。  下面简要讲讲第二步的思路。 二维码基础知识 二维码分为很多种，应用最广泛的一种二维码叫做“快速响应矩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="肉眼扫描二维码的一种思路">
+<meta property="og:url" content="http://ch3cooh12138.github.io/2023/01/16/crash-qrcode-by-hand/index.html">
+<meta property="og:site_name" content="Cabelis&#39;s lab">
+<meta property="og:description" content="前情提要 早就听闻天枢&amp;天璇战队里面个个都是人才，说话又好听，还会肉眼扫人脸发送微信好友请求。 众所周知，大部分普通人都是通过微信扫二维码添加好友请求的，那“肉眼扫人脸发送微信好友请求”这一看似复杂的动作就可以简单的分成以下两步：  将人脸转化为微信好友二维码。 肉眼扫描转化后的二维码。  下面简要讲讲第二步的思路。 二维码基础知识 二维码分为很多种，应用最广泛的一种二维码叫做“快速响应矩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/01/16/wpJDK2XxO7fWBAo.png">
+<meta property="article:published_time" content="2023-01-16T11:06:57.000Z">
+<meta property="article:modified_time" content="2023-01-16T13:52:23.754Z">
+<meta property="article:author" content="Cabelis">
+<meta property="article:tag" content="M1sc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/01/16/wpJDK2XxO7fWBAo.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://ch3cooh12138.github.io/2023/01/16/crash-qrcode-by-hand/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '肉眼扫描二维码的一种思路',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-16 21:52:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><link rel="stylesheet" href="/css/footer.css" ><meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/rss.xml" title="Cabelis's lab" type="application/rss+xml">
+</head><body>
+<div id='loader'>
+    
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+        <div class="configure-border-1">
+            <div class="configure-core"></div>
+        </div>
+        <div class="configure-border-2">
+            <div class="configure-core"></div>
+        </div>
+        <div class="loading-word"><font size= "3.5">Loading...</font></div>
+    </div>
+    
+</div>
+    
+<script>
+    var endLoading = function () {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+    }
+    window.addEventListener('load',endLoading);
+</script>
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/gezi.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/album/"><i class="fa-fw fas fa-camera"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/01/16/4HO8g2ykPLapuSm.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Cabelis's lab</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/album/"><i class="fa-fw fas fa-camera"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">肉眼扫描二维码的一种思路</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-16T11:06:57.000Z" title="发表于 2023-01-16 19:06:57">2023-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-16T13:52:23.754Z" title="更新于 2023-01-16 21:52:23">2023-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/">CTF</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="肉眼扫描二维码的一种思路"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前情提要">前情提要</h2>
+<p>早就听闻天枢&amp;天璇战队里面个个都是人才，说话又好听，还会肉眼扫人脸发送微信好友请求。</p>
+<p>众所周知，大部分普通人都是通过微信扫二维码添加好友请求的，那“肉眼扫人脸发送微信好友请求”这一看似复杂的动作就可以简单的分成以下两步：</p>
+<ol>
+<li>将人脸转化为微信好友二维码。</li>
+<li>肉眼扫描转化后的二维码。</li>
+</ol>
+<p>下面简要讲讲第二步的思路。</p>
+<h2 id="二维码基础知识">二维码基础知识</h2>
+<p>二维码分为很多种，应用最广泛的一种二维码叫做“快速响应矩阵图码”(QR Code)。除了我们常见的QR码外，使用比较广泛的还有：PDF417、DM、汉信码等。下面所说的“二维码”都指QR码。</p>
+<p>二维码格式示例如下：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/Kghqa4Q9pntJyHO.webp" width=80% />
+<h3 id="定位图案">定位图案</h3>
+<p>Position Detection Pattern（位置探测图形）是定位图案的一种，就是每个二维码都有的左上、左下和右上三个角的“回”字形的标志。用于标记二维码的矩形大小。这三个定位图案有白边叫Separators for Postion Detection Patterns。之所以三个而不是四个，因为三个就足以标识一个矩形了，用四个反而多余，且会使得能够表示的数据空间变小，扫描器在进行二维码扫描的时候会根据这三个定位标识符来更正二维码的坐标，方便进行扫描。这块区域的尺寸固定，无论是哪个版本的二维码，他的尺寸都是7*7的模块。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/DCSZIsBjWR7Uwqo.webp" width=50% />
+<p>Alignment Patterns（校正图形） 只有在Version 2以上（包括Version2）的二维码中需要这个东西，同样是为了定位用的。它的尺寸也是固定的，为5*5的模块。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/QXAG6iPDNVkehLt.webp" width=50% />
+<h3 id="格式信息">格式信息</h3>
+<p>Format Information 存在于所有的版本中，用于存放一些格式化数据的，通过读取这部分的内容，可以知道当前二维码的纠错等级、掩码类别。主要内容为“纠错等级（2bit）+ 掩码类别（3bit）+ BCH code(10bit,用于纠错)”，然后这15个bits还要与101010000010010做XOR操作，主要是为了如果选用了00的纠错级别和000的Mask，从而造成全部为白色，这会增加扫描器的图像识别的困难。</p>
+<p>为了增强二维码的容错能力，保证在一定的损坏范围内，不会影响数据的读取，共设计了两个区域来存放两条一模一样的格式信息。<br>
+这15个bit在format information区域内的分布以及顺序如下（下图中数字的顺序就是这15个bit的存放顺序，应当注意的是这些数字表示的是位的高低，也就是当获取到格式信息15个bit长度的二进制字符串时，左边为高位，右边为低位，所以最左侧的二进制数字应该在14的位置，最右侧的二进制数字应该在0的位置）：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/H5Z7LGi1f8pmakU.webp" width=80% />
+<h3 id="版本信息">版本信息</h3>
+<p>Version Information 在&gt;= Version 7的版本中，预留两块3*6的区域存放一些版本信息。</p>
+<p><a target="_blank" rel="noopener" href="https://www.thonky.com/qr-code-tutorial/format-version-tables#list-of-all-format-information-string">这里</a>可以查询所有版本、掩码及纠错码的格式信息及版本信息。</p>
+<h3 id="数据码字和纠错码字">数据码字和纠错码字</h3>
+<p>除了上述的那些地方，剩下的地方存放 Data Code 数据码字 和 Error Correction Code 纠错码字。我们后面就简称数据码和纠错码，就是最前面两张图的深灰色区域，一般数据都是从右下角开始填充，先填充数据码，数据码填充完毕之后再填充纠错码，以version1为例，数据的填充顺序，是这样的：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/xJ4UNGmBZX5s27K.webp" width=80% />
+<p>当然，随着版本的升高，会有越来越多的校正图形掺杂在其中，这样的话，数据填充可能就不是这么规矩的矩形了，但是总体的填充顺序不会大变化，都是先右后左的顺序。具体的可参考官方的文档。</p>
+<h2 id="解码流程">解码流程</h2>
+<p>有了上面这些前置信息，我们就可以开始手撕二维码了。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/PQGroVNg5WuOZCM.png" width=50% />
+<p>以封面二维码（如上图）为例，首先我们先读取format information区域内的掩码信息。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/kXfgpCZvDMQweK3.png" width=50% />
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/IlRcN2z38Snyusg.webp" width=50% />
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/PC8qxmctp3VLwzg.webp" width=50% />
+<p>对照上面第一张掩码表后（或异或101后对照第二张掩码表），得出异或的图案为<code>(i + j) % 2 = 0</code>。<br>
+之后再用掩模进行异或，这里推荐一个好用的工具<a target="_blank" rel="noopener" href="https://github.com/Merricx/qrazybox">Qrazybox</a>。可以自动实现掩模异或功能。</p>
+<p>异或后二维码如下图所示：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/evyHVZI6795OYtT.png" width=80% />
+<p>从右下角按从右往左、从下往上的顺序依次读取。前四位代表模式编码（具体参照下图），接着八位代表数据长度，接下来就是数据码区域。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/PDpH38b1T4waeXJ.webp" width=80% />
+<p>前四位（红色框内数据）0100表示UTF-8模式，接下来八位（黄色框内数据）00000110表示6字节的数据长度。那么我们只需要读接下来的6字节数据就可以了，具体如下。</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>二进制字节</th>
+<th>解码后数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>01010110</td>
+<td>唯</td>
+</tr>
+<tr>
+<td>2</td>
+<td>11100110</td>
+<td>乌</td>
+</tr>
+<tr>
+<td>3</td>
+<td>10001000</td>
+<td>偶</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10010001</td>
+<td>我</td>
+</tr>
+<tr>
+<td>5</td>
+<td>00110101</td>
+<td>舞</td>
+</tr>
+<tr>
+<td>6</td>
+<td>00110000</td>
+<td>狮</td>
+</tr>
+</tbody>
+</table>
+<p>可以看见这是一篇著名文章的结尾部分。</p>
+<blockquote>
+<p>我依稀记得那是一个夏天。<br>
+稚童的我和小伙伴正模仿庙会上翻飞的彩狮。<br>
+从未见过的人和从未见过的机器喧嚷着碾过村里的田坎。<br>
+现代化的浪潮就这样闯入了我的生活。<br>
+当时的我没有太多感触，只是觉得路变宽了，大人们都忙了起来。<br>
+我们是乡里远近闻名的少年舞狮队，田大爷说，我们将会是以后庙会上的主角。<br>
+但是再也没有庙会了。<br>
+机器的轰鸣碾碎了村口闲聊的碎语，碾碎了田垄上劳作的农歌，扬起满天尘埃，在阳光的反射中勾勒一副似乎是幸福的画卷。<br>
+它像是一条条线，将每个人细细的拆分开。<br>
+我考上了高中，然后是大学，我离开了大山。<br>
+从前幻想着在庙会上跃动的小伙伴们也四散而去。<br>
+城市，城市。<br>
+我初次踏上那里的土地，给我的是一种来自灵魂的震荡。<br>
+它像是一只猛兽，不停的吞噬四周，大山不能阻挡它，我也不能。<br>
+一切好像都会被裹挟其中，然后成为它的一部分。<br>
+但是村子最终并没有融入其中，阻挡它的不是大山，也不是任何人，而是枯竭的矿脉。<br>
+当我回到村子的时候，记忆里繁忙的路上只剩三两只白鸭阔步而行。<br>
+正是一个星期的中点，曾是村子里最喧闹的时节，但现在寂静无声。<br>
+再没有机器的轰鸣，也没有工人劳动的号子，更没有农妇们闲聊的细语。<br>
+浪潮曾经席卷而过，退潮也几乎带走了它曾带来的一切，还带走了所有的年轻人，只留下零散的历史遗留者。<br>
+李老师，现在的李大爷帮我打开了老屋的大门。<br>
+老屋还是老屋，只是布满了灰尘。意外的，我在长满了杂草了的杂物房中寻到了一个褪色的狮头，脆弱的它居然能在岁月的刻刀下幸存。<br>
+随手拿起它，眼前似乎又浮现当年壮志满怀的小伙伴，耳畔仿佛又响起庙会锣鼓的鼓点。<br>
+烈阳如火，依稀还是那个夏天。<br>
+“封———矿———啦———”<br>
+一声悠远的雷响不知从何而来，在山间回荡不绝，为曾路过小村的潮水刻上一个终点。<br>
+封矿星期四，唯我舞狮。</p>
+</blockquote>
+<h2 id="写在最后">写在最后</h2>
+<p>为什么没有纠错码的部分？只要将第一步“将人脸转化为微信好友二维码”做好，就不存在数据丢失的问题，自然用不到纠错码。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://CH3COOH12138.github.io">Cabelis</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://ch3cooh12138.github.io/2023/01/16/crash-qrcode-by-hand/">http://ch3cooh12138.github.io/2023/01/16/crash-qrcode-by-hand/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://CH3COOH12138.github.io" target="_blank">Cabelis's lab</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/M1sc/">M1sc</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/01/16/wpJDK2XxO7fWBAo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/vx.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/vx.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/10/hgame2023week1wp/" title="HGAME2023 Week1 WP"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/09/11/b5hBKCHfD3uAdgI.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-10</div><div class="title">HGAME2023 Week1 WP</div></div></a></div><div><a href="/2022/08/26/moectf2022/" title="CTF初体验——MoeCTF2022"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/09/11/b5hBKCHfD3uAdgI.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-26</div><div class="title">CTF初体验——MoeCTF2022</div></div></a></div><div><a href="/2022/10/17/tsctf-j2022wp/" title="TSCTF-J2022 WP"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/09/11/b5hBKCHfD3uAdgI.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">TSCTF-J2022 WP</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Gitalk</span><span class="switch-btn"></span><span class="second-comment">Waline</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/gezi.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cabelis</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CH3COOH12138"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:1225610429@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://ch3cooh12138.github.io/rss.xml" target="_blank" title="RSS"><i class="fas fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到Cabelis's lab!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">二维码基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%BD%8D%E5%9B%BE%E6%A1%88"><span class="toc-number">2.1.</span> <span class="toc-text">定位图案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text">格式信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">2.3.</span> <span class="toc-text">版本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%A0%81%E5%AD%97%E5%92%8C%E7%BA%A0%E9%94%99%E7%A0%81%E5%AD%97"><span class="toc-number">2.4.</span> <span class="toc-text">数据码字和纠错码字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">解码流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">4.</span> <span class="toc-text">写在最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/16/crash-qrcode-by-hand/" title="肉眼扫描二维码的一种思路"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2023/01/16/wpJDK2XxO7fWBAo.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="肉眼扫描二维码的一种思路"/></a><div class="content"><a class="title" href="/2023/01/16/crash-qrcode-by-hand/" title="肉眼扫描二维码的一种思路">肉眼扫描二维码的一种思路</a><time datetime="2023-01-16T11:06:57.000Z" title="发表于 2023-01-16 19:06:57">2023-01-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/hgame2023week1wp/" title="HGAME2023 Week1 WP"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/09/11/b5hBKCHfD3uAdgI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HGAME2023 Week1 WP"/></a><div class="content"><a class="title" href="/2023/01/10/hgame2023week1wp/" title="HGAME2023 Week1 WP">HGAME2023 Week1 WP</a><time datetime="2023-01-10T11:25:26.000Z" title="发表于 2023-01-10 19:25:26">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/02/color1/" title="搞点颜色"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/12/02/9OulYAWUVtJkKLN.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="搞点颜色"/></a><div class="content"><a class="title" href="/2022/12/02/color1/" title="搞点颜色">搞点颜色</a><time datetime="2022-12-02T02:48:42.000Z" title="发表于 2022-12-02 10:48:42">2022-12-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/24/py6/" title="牢后感"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/11/24/tWQJlP7S3UDB8wT.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="牢后感"/></a><div class="content"><a class="title" href="/2022/11/24/py6/" title="牢后感">牢后感</a><time datetime="2022-11-24T15:42:54.000Z" title="发表于 2022-11-24 23:42:54">2022-11-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/22/assembly-flag/" title="汇编语言中的标志寄存器及其相关指令"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/11/22/cr3JWmnsHIvSL74.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="汇编语言中的标志寄存器及其相关指令"/></a><div class="content"><a class="title" href="/2022/11/22/assembly-flag/" title="汇编语言中的标志寄存器及其相关指令">汇编语言中的标志寄存器及其相关指令</a><time datetime="2022-11-21T18:17:30.000Z" title="发表于 2022-11-22 02:17:30">2022-11-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Cabelis</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">😴</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'b0300cfab71f3058c36d',
+      clientSecret: 'd00c2df7d24351f29b1eb719a6b1ddc067911533',
+      repo: 'Comment',
+      owner: 'CH3COOH12138',
+      admin: ['CH3COOH12138'],
+      id: 'f094109f10126480c5fa08b870e05527',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !true) {
+  if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script><script>function loadWaline () {
+  function insertCSS () {
+    const link = document.createElement("link")
+    link.rel = "stylesheet"
+    link.href = "https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css"
+    document.head.appendChild(link)
+  }
+
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'cabelis-7w4v3rv4k-ch3cooh12138.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, {"emoji":["//unpkg.com/@waline/emojis@1.0.1/qq","//unpkg.com/@waline/emojis@1.0.1/bilibili"],"requiredMeta":["nick","mail"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline()
+  else {
+    insertCSS()
+    getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+  }
+}
+
+if ('Gitalk' === 'Waline' || !true) {
+  if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

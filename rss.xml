@@ -9,8 +9,36 @@
     <atom:link href="http://ch3cooh12138.github.io/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Tue, 10 Jan 2023 12:13:12 GMT</pubDate>
+    <pubDate>Mon, 16 Jan 2023 13:52:23 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>肉眼扫描二维码的一种思路</title>
+      <link>http://ch3cooh12138.github.io/2023/01/16/crash-qrcode-by-hand/</link>
+      <guid>http://ch3cooh12138.github.io/2023/01/16/crash-qrcode-by-hand/</guid>
+      <pubDate>Mon, 16 Jan 2023 11:06:57 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h2 id=&quot;前情提要&quot;&gt;前情提要&lt;/h2&gt;
+&lt;p&gt;早就听闻天枢&amp;amp;天璇战队里面个个都是人才，说话又好听，还会肉眼扫人脸发送微信好友请求。&lt;/p&gt;
+&lt;p&gt;众所周知，大部分普通人都是通过微信扫二维码添加好友请求的，那“肉眼扫人脸发送微信好友请求”这一看似复杂的动作就可以简单</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="前情提要">前情提要</h2><p>早就听闻天枢&amp;天璇战队里面个个都是人才，说话又好听，还会肉眼扫人脸发送微信好友请求。</p><p>众所周知，大部分普通人都是通过微信扫二维码添加好友请求的，那“肉眼扫人脸发送微信好友请求”这一看似复杂的动作就可以简单的分成以下两步：</p><ol><li>将人脸转化为微信好友二维码。</li><li>肉眼扫描转化后的二维码。</li></ol><p>下面简要讲讲第二步的思路。</p><h2 id="二维码基础知识">二维码基础知识</h2><p>二维码分为很多种，应用最广泛的一种二维码叫做“快速响应矩阵图码”(QR Code)。除了我们常见的QR码外，使用比较广泛的还有：PDF417、DM、汉信码等。下面所说的“二维码”都指QR码。</p><p>二维码格式示例如下：</p><img src="https://s2.loli.net/2023/01/16/Kghqa4Q9pntJyHO.webp" width=80% /><h3 id="定位图案">定位图案</h3><p>Position Detection Pattern（位置探测图形）是定位图案的一种，就是每个二维码都有的左上、左下和右上三个角的“回”字形的标志。用于标记二维码的矩形大小。这三个定位图案有白边叫Separators for Postion Detection Patterns。之所以三个而不是四个，因为三个就足以标识一个矩形了，用四个反而多余，且会使得能够表示的数据空间变小，扫描器在进行二维码扫描的时候会根据这三个定位标识符来更正二维码的坐标，方便进行扫描。这块区域的尺寸固定，无论是哪个版本的二维码，他的尺寸都是7*7的模块。</p><img src="https://s2.loli.net/2023/01/16/DCSZIsBjWR7Uwqo.webp" width=50% /><p>Alignment Patterns（校正图形） 只有在Version 2以上（包括Version2）的二维码中需要这个东西，同样是为了定位用的。它的尺寸也是固定的，为5*5的模块。</p><img src="https://s2.loli.net/2023/01/16/QXAG6iPDNVkehLt.webp" width=50% /><h3 id="格式信息">格式信息</h3><p>Format Information 存在于所有的版本中，用于存放一些格式化数据的，通过读取这部分的内容，可以知道当前二维码的纠错等级、掩码类别。主要内容为“纠错等级（2bit）+ 掩码类别（3bit）+ BCH code(10bit,用于纠错)”，然后这15个bits还要与101010000010010做XOR操作，主要是为了如果选用了00的纠错级别和000的Mask，从而造成全部为白色，这会增加扫描器的图像识别的困难。</p><p>为了增强二维码的容错能力，保证在一定的损坏范围内，不会影响数据的读取，共设计了两个区域来存放两条一模一样的格式信息。<br>这15个bit在format information区域内的分布以及顺序如下（下图中数字的顺序就是这15个bit的存放顺序，应当注意的是这些数字表示的是位的高低，也就是当获取到格式信息15个bit长度的二进制字符串时，左边为高位，右边为低位，所以最左侧的二进制数字应该在14的位置，最右侧的二进制数字应该在0的位置）：</p><img src="https://s2.loli.net/2023/01/16/H5Z7LGi1f8pmakU.webp" width=80% /><h3 id="版本信息">版本信息</h3><p>Version Information 在&gt;= Version 7的版本中，预留两块3*6的区域存放一些版本信息。</p><p><a href="https://www.thonky.com/qr-code-tutorial/format-version-tables#list-of-all-format-information-string">这里</a>可以查询所有版本、掩码及纠错码的格式信息及版本信息。</p><h3 id="数据码字和纠错码字">数据码字和纠错码字</h3><p>除了上述的那些地方，剩下的地方存放 Data Code 数据码字 和 Error Correction Code 纠错码字。我们后面就简称数据码和纠错码，就是最前面两张图的深灰色区域，一般数据都是从右下角开始填充，先填充数据码，数据码填充完毕之后再填充纠错码，以version1为例，数据的填充顺序，是这样的：</p><img src="https://s2.loli.net/2023/01/16/xJ4UNGmBZX5s27K.webp" width=80% /><p>当然，随着版本的升高，会有越来越多的校正图形掺杂在其中，这样的话，数据填充可能就不是这么规矩的矩形了，但是总体的填充顺序不会大变化，都是先右后左的顺序。具体的可参考官方的文档。</p><h2 id="解码流程">解码流程</h2><p>有了上面这些前置信息，我们就可以开始手撕二维码了。</p><img src="https://s2.loli.net/2023/01/16/PQGroVNg5WuOZCM.png" width=50% /><p>以封面二维码（如上图）为例，首先我们先读取format information区域内的掩码信息。</p><img src="https://s2.loli.net/2023/01/16/kXfgpCZvDMQweK3.png" width=50% /><img src="https://s2.loli.net/2023/01/16/IlRcN2z38Snyusg.webp" width=50% /><img src="https://s2.loli.net/2023/01/16/PC8qxmctp3VLwzg.webp" width=50% /><p>对照上面第一张掩码表后（或异或101后对照第二张掩码表），得出异或的图案为<code>(i + j) % 2 = 0</code>。<br>之后再用掩模进行异或，这里推荐一个好用的工具<a href="https://github.com/Merricx/qrazybox">Qrazybox</a>。可以自动实现掩模异或功能。</p><p>异或后二维码如下图所示：</p><img src="https://s2.loli.net/2023/01/16/evyHVZI6795OYtT.png" width=80% /><p>从右下角按从右往左、从下往上的顺序依次读取。前四位代表模式编码（具体参照下图），接着八位代表数据长度，接下来就是数据码区域。</p><img src="https://s2.loli.net/2023/01/16/PDpH38b1T4waeXJ.webp" width=80% /><p>前四位（红色框内数据）0100表示UTF-8模式，接下来八位（黄色框内数据）00000110表示6字节的数据长度。那么我们只需要读接下来的6字节数据就可以了，具体如下。</p><table><thead><tr><th>序号</th><th>二进制字节</th><th>解码后数据</th></tr></thead><tbody><tr><td>1</td><td>01010110</td><td>唯</td></tr><tr><td>2</td><td>11100110</td><td>乌</td></tr><tr><td>3</td><td>10001000</td><td>偶</td></tr><tr><td>4</td><td>10010001</td><td>我</td></tr><tr><td>5</td><td>00110101</td><td>舞</td></tr><tr><td>6</td><td>00110000</td><td>狮</td></tr></tbody></table><p>可以看见这是一篇著名文章的结尾部分。</p><blockquote><p>我依稀记得那是一个夏天。<br>稚童的我和小伙伴正模仿庙会上翻飞的彩狮。<br>从未见过的人和从未见过的机器喧嚷着碾过村里的田坎。<br>现代化的浪潮就这样闯入了我的生活。<br>当时的我没有太多感触，只是觉得路变宽了，大人们都忙了起来。<br>我们是乡里远近闻名的少年舞狮队，田大爷说，我们将会是以后庙会上的主角。<br>但是再也没有庙会了。<br>机器的轰鸣碾碎了村口闲聊的碎语，碾碎了田垄上劳作的农歌，扬起满天尘埃，在阳光的反射中勾勒一副似乎是幸福的画卷。<br>它像是一条条线，将每个人细细的拆分开。<br>我考上了高中，然后是大学，我离开了大山。<br>从前幻想着在庙会上跃动的小伙伴们也四散而去。<br>城市，城市。<br>我初次踏上那里的土地，给我的是一种来自灵魂的震荡。<br>它像是一只猛兽，不停的吞噬四周，大山不能阻挡它，我也不能。<br>一切好像都会被裹挟其中，然后成为它的一部分。<br>但是村子最终并没有融入其中，阻挡它的不是大山，也不是任何人，而是枯竭的矿脉。<br>当我回到村子的时候，记忆里繁忙的路上只剩三两只白鸭阔步而行。<br>正是一个星期的中点，曾是村子里最喧闹的时节，但现在寂静无声。<br>再没有机器的轰鸣，也没有工人劳动的号子，更没有农妇们闲聊的细语。<br>浪潮曾经席卷而过，退潮也几乎带走了它曾带来的一切，还带走了所有的年轻人，只留下零散的历史遗留者。<br>李老师，现在的李大爷帮我打开了老屋的大门。<br>老屋还是老屋，只是布满了灰尘。意外的，我在长满了杂草了的杂物房中寻到了一个褪色的狮头，脆弱的它居然能在岁月的刻刀下幸存。<br>随手拿起它，眼前似乎又浮现当年壮志满怀的小伙伴，耳畔仿佛又响起庙会锣鼓的鼓点。<br>烈阳如火，依稀还是那个夏天。<br>“封———矿———啦———”<br>一声悠远的雷响不知从何而来，在山间回荡不绝，为曾路过小村的潮水刻上一个终点。<br>封矿星期四，唯我舞狮。</p></blockquote><h2 id="写在最后">写在最后</h2><p>为什么没有纠错码的部分？只要将第一步“将人脸转化为微信好友二维码”做好，就不存在数据丢失的问题，自然用不到纠错码。</p>]]></content:encoded>
+      
+      
+      <category domain="http://CH3COOH12138.github.io/categories/CTF/">CTF</category>
+      
+      
+      <category domain="http://CH3COOH12138.github.io/tags/M1sc/">M1sc</category>
+      
+      
+      <comments>http://ch3cooh12138.github.io/2023/01/16/crash-qrcode-by-hand/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>HGAME2023 Week1 WP</title>
@@ -35,9 +63,9 @@
       <category domain="http://CH3COOH12138.github.io/categories/CTF/">CTF</category>
       
       
-      <category domain="http://CH3COOH12138.github.io/tags/W3b/">W3b</category>
-      
       <category domain="http://CH3COOH12138.github.io/tags/M1sc/">M1sc</category>
+      
+      <category domain="http://CH3COOH12138.github.io/tags/W3b/">W3b</category>
       
       
       <comments>http://ch3cooh12138.github.io/2023/01/10/hgame2023week1wp/#disqus_thread</comments>
@@ -460,11 +488,11 @@ B. </description>
       <category domain="http://CH3COOH12138.github.io/categories/CTF/">CTF</category>
       
       
+      <category domain="http://CH3COOH12138.github.io/tags/M1sc/">M1sc</category>
+      
       <category domain="http://CH3COOH12138.github.io/tags/Rever-e/">Rever$e</category>
       
       <category domain="http://CH3COOH12138.github.io/tags/Crypt0/">Crypt0</category>
-      
-      <category domain="http://CH3COOH12138.github.io/tags/M1sc/">M1sc</category>
       
       
       <comments>http://ch3cooh12138.github.io/2022/10/17/tsctf-j2022wp/#disqus_thread</comments>
@@ -549,35 +577,6 @@ B. </description>
       
       
       <comments>http://ch3cooh12138.github.io/2022/09/11/py1/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>CTF初体验——MoeCTF2022</title>
-      <link>http://ch3cooh12138.github.io/2022/08/26/moectf2022/</link>
-      <guid>http://ch3cooh12138.github.io/2022/08/26/moectf2022/</guid>
-      <pubDate>Fri, 26 Aug 2022 10:41:43 GMT</pubDate>
-      
-        
-        
-      <description>&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://baike.baidu.com/item/CTF/9548546?fr=aladdin&quot;&gt;CTF&lt;/a&gt;（Capture The Flag）中文一般译作夺旗赛，在网络安全领域中指的是网络安全技术人员之间进行技术竞技</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<blockquote><p><a href="https://baike.baidu.com/item/CTF/9548546?fr=aladdin">CTF</a>（Capture The Flag）中文一般译作夺旗赛，在网络安全领域中指的是网络安全技术人员之间进行技术竞技的一种比赛形式。CTF起源于1996年DEFCON全球黑客大会，以代替之前黑客们通过互相发起真实攻击进行技术比拼的方式。已经成为全球范围网络安全圈流行的竞赛形式。——百度百科</p></blockquote><p>如主办方所言，本次<a href="https://ctf.xidian.edu.cn">MoeCTF2022</a>面向全国全体准大学生举办，题目难度不高且坡度平缓，0基础新生可以通过本次比赛对<strong>信息安全夺旗赛</strong>有一个基础且全面的认识。但由于我水平有限，仅对本次比赛的一小部分题目做部分赏析。</p><h2 id="计算机技术基础">计算机技术基础</h2><h3 id="run-me-25’">run me (25’)</h3><p>下载得runme.exe文件，双击打开闪退。将文件拖入cmd回车运行得Flag。<br><img src="https://s2.loli.net/2022/08/31/LbtoWpMjxCUDTPg.png" width=80% /></p><h3 id="CCCCC-25’">CCCCC (25’)</h3><p>下载得CCCCC.c文件，配置C语言环境运行得Flag。</p><h3 id="Python-25’">Python (25’)</h3><p>同上，配置Python环境运行得Flag。</p><h3 id="run-me-2-25’">run me 2 (25’)</h3><p>配置虚拟机安装Linux系统运行文件，我选择了VMware Station。<br>安装虚拟机费了我老大劲儿，参考了一下CSDN上的<a href="https://blog.csdn.net/qq_41689437/article/details/125367151">野生安装文档</a>。<br>联网运行程序得Flag。</p><h2 id="古典密码">古典密码</h2><h3 id="ABCDEFG-25’">ABCDEFG~ (25’)</h3><p>题目描述：字母儿歌你会倒着唱吗？（大写）<br>下载解压得密文：<br>moectf{18 24 26 13 08 18 13 20 26 15 11 19 26 25 22 07 08 12 13 20}<br>对照倒序字母表数数or写脚本破解得Flag。</p><h3 id="小小凯撒-50’">小小凯撒 (50’)</h3><p>密文：kqEftuEUEftqOADDqoFRxmsOAzsDmFGxmFuAzE<br>写脚本枚举得Flag。<br>值得注意的是它的hint2：*每个单词首字母大写，其余小写，无分隔。*结合脚本与Flag可知，此处的凯撒密码如果由Z-&gt;A，则大小写改变。</p><h3 id="凯撒变异了-50’">凯撒变异了 (50’)</h3><p>题目描述：神秘的变异人凯撒来自track曾经的出发地：114514市。<br>密文：ZpyLfxGmelDeftewJwFbwDGssZszbliileadaa<br>移位为1、1、4、5、1、4……循环。<br>大小写改变同上。</p><h3 id="Vigenere-100’"><a href="https://baike.baidu.com/item/%E7%BB%B4%E5%90%89%E5%B0%BC%E4%BA%9A%E5%AF%86%E7%A0%81/4905472">Vigenere</a> (100’)</h3><p>凑了半天结果网上有破解这类密码的脚本。<br>请面向搜索引擎。<br>附：<a href="https://ctf-wiki.org/crypto/classical/polyalphabetic/#vigenere">维吉尼亚密码——CTF Wiki</a></p><h2 id="现代密码学">现代密码学</h2><h3 id="密码学之入门指北-25’">密码学之入门指北 (25’)</h3><p>运行程序得Flag。</p><h2 id="隐写等杂项">隐写等杂项</h2><h3 id="Hide-and-seek-25’">Hide-and-seek (25’)</h3><img src="https://s2.loli.net/2022/09/12/Ve4DJ52pL63xQAm.webp" width=80% /><p>（笑）</p><h3 id="Misc杂项之入门指北-25’">Misc杂项之入门指北 (25’)</h3><p>密文：.-- . .-… …— — – . …–.- …- — …–.- – … …-- -.-. …–.- .---- …- -.-. -.- -.-- -.-.–<br>摩斯密码解码得Flag。</p><h3 id="Rabbit-50’">Rabbit (50’)</h3><img src="https://s2.loli.net/2022/09/09/CYm7pkNUO8RW9dP.png" width=25% /><p><s>小兔子能有什么坏心思呢？</s><br>查看十六进制编码，得到加在文件末尾的神秘字符：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">########(=^-^=)###U2FsdGVkX1+EPlLmNvaJK4Pe06nW0eLquWsUpdyv3fjXM2PcDBDKlXeKupnnWlFH</span><br><span class="line">ewFEGmqpGyC1VdX8</span><br></pre></td></tr></table></figure><p>Base64破解，无果，得到有意义的前缀 Salted__。放入搜索引擎，得到AES加密等花里胡哨的加密方法，其中有Rabbit加密。使用Rabbit加密解码后得Flag。<br>为什么会固定出现Salted__前缀，具体原因未知。</p><h3 id="想听点啥？-200’">想听点啥？ (200’)</h3><p>文件内容：<br>whatdoyouliketohear.zip<br>|--whatdoyouliketohear.mp3<br>|--whatdoyouliketohear.mscz<br>|-- mister.7z<br>　　　　|-- flag.txt<br>　　　　|-- <a href="http://qaq.py">qaq.py</a><br>这是本次CTF为数不多的一道音频隐写题。我本以为这题和图片隐写差不多，因为音频也可以采取LSB等隐写方式，甚至可以把信息藏入频谱图。然而我还是小了，在一遍又一遍地欣赏了MP3文件里的美妙阴乐后，方才意识到附带的.mscz文件可能有玄机。面向搜索引擎发现这是个乐谱文件，使用<a href="https://musescore.org/zh-hans">MuseScore</a>打开后，我不得不佩服出题人的艺术创作能力。</p><img src="https://s2.loli.net/2022/09/12/tEgO9jZRIe6GXxV.webp" width=80% /><p>抽象的艺术。<br>在经历了几十遍尝试后，我放弃了。因为我不理解这个圈是大写字母O还是数字0，这条线是大写字母I还是小写字母l（最后友人试出密码证明它是数字1）。<br>抽象，太抽象了。<br>更抽象的是这个名为Flag实际又不是Flag的文本文件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">,6+,C]:2Al2BR\B</span><br></pre></td></tr></table></figure><p>打开py文件：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># this is not flag, but real flag will be encrypted in same algorithm.</span></span><br><span class="line">flag = <span class="string">&#x27;moectf&#123;xxxxxxxxxxxxxxxxxxxxx&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">src: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bytes</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>([<span class="built_in">ord</span>(src[i]) ^ <span class="built_in">ord</span>(src[i-<span class="number">1</span>]) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(src))])</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> out:</span><br><span class="line">    out.write(encrypt(flag))</span><br></pre></td></tr></table></figure><p>仔细阅读代码，发现是“已知加密算法与密文求明文”的套路。研究加密算法，encrypt函数输入string类型src形参，输出bytes类型。return后跟的括号有点多，外层是bytes([])，即将一个列表转化为字节串。内层是字符串遍历，从第二位开始，src的每一位字符的ASCII码与其前一位字符的ASCII码做按位异或运算。最后调用函数，传入实参flag，将密文写入flag.txt。<br>异或运算可逆，可以采取a^b^b=a的方式得出答案。但是本题计算量不大<s>懒得研究逻辑</s>，我决定采用爆破的方式。<br>代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">f1 = <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>)</span><br><span class="line">target = <span class="built_in">bytes</span>(f1.read(), encoding=<span class="string">&quot;UTF-8&quot;</span>)</span><br><span class="line">f1.close()</span><br><span class="line"></span><br><span class="line">testflag = <span class="built_in">list</span>(flag)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>, <span class="number">28</span>):</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>, <span class="number">127</span>):</span><br><span class="line">        testflag[i] = <span class="built_in">chr</span>(k)</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">ord</span>(testflag[i]) ^ <span class="built_in">ord</span>(testflag[i-<span class="number">1</span>])) == target[i-<span class="number">1</span>]:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">flag = <span class="string">&#x27;&#x27;</span>.join(testflag)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure><p>易得flag.txt文本内容长度为28，与上文flag字符串的长度差一，刚好是两两按位异或后的结果长度.除去前面的&quot;moectf{“和末尾的”}&quot;，得出爆破范围为7~28。采用ASCII可显示字符逐位尝试，与前一位进行加密运算后和target对应位的值进行比较，如此反复后得出Flag。<br>需要注意的是字符串与字节串的转换。</p><h2 id="写在最后">写在最后</h2><p>截至2022/8/26/19:00，笔者共在本次比赛中获得1050分，排名73位。<br>由于时间有限，仅写出以上几道题的wp。</p>]]></content:encoded>
-      
-      
-      <category domain="http://CH3COOH12138.github.io/categories/CTF/">CTF</category>
-      
-      
-      <category domain="http://CH3COOH12138.github.io/tags/Crypt0/">Crypt0</category>
-      
-      <category domain="http://CH3COOH12138.github.io/tags/M1sc/">M1sc</category>
-      
-      
-      <comments>http://ch3cooh12138.github.io/2022/08/26/moectf2022/#disqus_thread</comments>
       
     </item>
     
