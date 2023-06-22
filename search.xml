@@ -4,6 +4,81 @@
   
     
     <entry>
+      <title>Unicorn引擎初探</title>
+      <link href="/2023/06/19/unicorn/"/>
+      <url>/2023/06/19/unicorn/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Unicorn简介">Unicorn简介</h2><p>Unicorn是一个轻量级，多平台，多架构的CPU模拟器框架，基于qemu开发，它可以代替CPU模拟代码的执行，就比如说我们需要调试某个程序，常见的调试器需要配置可执行文件需要的环境并且还需要考虑一些恶意代码导致的安全问题，但是通过Unicorn我们就可以单纯的模拟代码的执行（甚至可以指定从某个地址开始执行）而不需要考虑这些问题。<br>它的亮点有：</p><ul><li>支持多种架构: Arm, Arm64 (Armv8), M68K, Mips, Sparc, &amp; X86 (include X86_64).</li><li>对Windows和nix系统(已确认包含Mac OSX, Linux, BSD &amp; Solaris)的原生支持</li><li>具有平台独立且简洁易于使用的API</li><li>使用JIT编译技术, 性能表现优异</li></ul><h2 id="技术原理">技术原理</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> rever$e </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【链接】Reverse中的加密算法</title>
+      <link href="/2023/06/19/cryptoverse/"/>
+      <url>/2023/06/19/cryptoverse/</url>
+      
+        <content type="html"><![CDATA[<p>哈哈 懒得整理所以贴点大爹的链接↓</p><ul><li><a href="https://www.cnblogs.com/Here-is-SG/p/15760247.html">Base64</a></li><li><a href="https://www.cnblogs.com/Here-is-SG/p/15621082.html">TEA</a></li><li><a href="https://www.cnblogs.com/Here-is-SG/p/15723754.html">RC4</a></li><li><a href="https://www.cnblogs.com/Here-is-SG/p/16454132.html">DES</a></li></ul><p>感觉再不发博客👶要被开喽</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> rever$e </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>从OTF到矢量图</title>
+      <link href="/2023/06/19/font-path/"/>
+      <url>/2023/06/19/font-path/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Design </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> W3b </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【转载】Python实现tea/xtea/xxtea加密算法</title>
       <link href="/2023/03/03/tea-encryption/"/>
       <url>/2023/03/03/tea-encryption/</url>
